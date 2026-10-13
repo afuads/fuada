@@ -1,0 +1,573 @@
+/* =========================================================================
+   Fuad — hakemuksen rinnalla (Metropolia)
+   styles.css — rauhallinen, lukupainotteinen, yksi sarake. Ei kehyksiä.
+   ========================================================================= */
+
+/* ------------------------------- tokens -------------------------------- */
+:root {
+  --paper:        #FBFAF7;
+  --paper-alt:    #F7F4EE;
+  --paper-deep:   #EFEAE1;
+
+  --ink:          #16191B;
+  --ink-soft:     #555D63;
+  --ink-faint:    #5E656B;
+  --line:         #E4DDD3;
+  --line-soft:    #EDE7DE;
+
+  --accent:       #16655D;
+  --accent-deep:  #0E4A44;
+  --accent-wash:  #E7F0EE;
+  --terracotta:   #A65B3B;
+  --terracotta-deep: #8A4529; /* pienet merkinnät vaalealla pohjalla (kontrasti) */
+
+  --radius:       12px;
+
+  --wrap:         68rem;
+  --measure:      62ch;
+  --gutter:       clamp(1.15rem, 5vw, 3rem);
+  --section-y:    clamp(2.75rem, 6vw, 4.75rem);
+  --header-h:     3.4rem;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+               Arial, "Noto Sans", sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+                "Times New Roman", serif;
+}
+
+/* ------------------------------- base ---------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding-top: var(--header-h);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: clamp(1.02rem, .98rem + .22vw, 1.1rem);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  margin: 0 0 .55em;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--accent-deep); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+a:hover { color: var(--accent); }
+
+img { max-width: 100%; height: auto; display: block; }
+
+ul, ol { margin: 0; padding: 0; }
+
+strong { font-weight: 650; }
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection { background: var(--accent-wash); }
+
+.wrap {
+  width: min(100% - (var(--gutter) * 2), var(--wrap));
+  margin-inline: auto;
+}
+.wrap--narrow { max-width: 42rem; }
+
+.prose { max-width: var(--measure); }
+
+.skip-link {
+  position: fixed;
+  top: .5rem; left: .5rem;
+  z-index: 200;
+  transform: translateY(-160%);
+  background: var(--accent);
+  color: #fff;
+  padding: .7rem 1.1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.skip-link:focus-visible { transform: none; color: #fff; }
+
+/* --------------------------- pienet elementit --------------------------- */
+.lead {
+  font-size: 1.1em;
+  color: var(--ink-soft);
+}
+
+.aside {
+  color: var(--ink-soft);
+}
+
+.pull {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 1.08rem + .7vw, 1.5rem);
+  line-height: 1.5;
+  color: var(--ink);
+  border-left: 3px solid var(--accent);
+  padding-left: clamp(.9rem, 2vw, 1.3rem);
+  margin: 1.6rem 0;
+}
+
+/* --------------------------- edistymispalkki + valikko ------------------ */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 120;
+  background: transparent;
+  pointer-events: none;
+}
+.progress__bar {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+}
+
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 110;
+  background: rgba(251, 250, 247, .94);
+  backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header__inner {
+  width: min(100% - (var(--gutter) * 2), var(--wrap));
+  margin-inline: auto;
+  min-height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-header__mark {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-header__mark span { color: var(--accent); }
+
+.site-nav ul {
+  display: flex;
+  align-items: center;
+  gap: clamp(.7rem, 2vw, 1.5rem);
+  list-style: none;
+}
+.site-nav a {
+  font-size: .88rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: .35rem 0;
+  border-bottom: 2px solid transparent;
+}
+.site-nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+.site-nav__cta a {
+  color: #fff;
+  background: var(--accent);
+  padding: .45rem 1rem;
+  border-radius: 999px;
+  border-bottom: 0;
+}
+.site-nav__cta a:hover { background: var(--accent-deep); color: #fff; }
+
+/* ------------------------------- alku ----------------------------------- */
+.hero {
+  padding: clamp(3rem, 10vh, 5rem) 0 clamp(2.25rem, 6vh, 3.5rem);
+  background:
+    radial-gradient(52rem 26rem at 88% -20%, var(--accent-wash), transparent 62%),
+    var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.hero__inner { max-width: 46rem; }
+
+.hero__title {
+  font-size: clamp(1.25rem, .75rem + 2.1vw, 2rem); /* ~24 pt työpöydällä */
+  line-height: 1.15;
+  margin-bottom: .7em;
+  white-space: nowrap;   /* yhdellä rivillä; kapea puhelin rikkoo tämän */
+}
+.hero__title span { color: var(--accent); }
+
+.hero__body { max-width: 40rem; color: var(--ink-soft); }
+
+/* ------------------------------ osiot ----------------------------------- */
+.section { padding: var(--section-y) 0; }
+.section--alt {
+  background: var(--paper-alt);
+  border-block: 1px solid var(--line-soft);
+}
+section[id], div[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
+
+.section h2 {
+  font-size: clamp(1.5rem, 1.25rem + 1.4vw, 2.15rem);
+  margin-bottom: .7em;
+}
+
+/* pieni hiljaisempi nyökkäys ennen varsinaista tarinaa */
+.wink {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15em;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: 1.25em;
+}
+
+/* --------------------------- yksinkertainen lista ----------------------- */
+.plain-list {
+  list-style: none;
+  max-width: 52rem;
+  margin-top: clamp(1.5rem, 4vw, 2.25rem);
+  border-top: 1px solid var(--line);
+}
+.plain-list li {
+  padding: clamp(1.15rem, 3vw, 1.6rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+.plain-list h3 {
+  font-size: 1.2rem;
+  margin-bottom: .35rem;
+}
+.plain-list p {
+  color: var(--ink-soft);
+  font-size: .99rem;
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* --------------------------- saavutukset (lista) ------------------------- */
+.gains {
+  list-style: none;
+  max-width: 52rem;
+  margin: 1.5rem 0 2rem;
+  border-top: 1px solid var(--line);
+}
+.gains li {
+  position: relative;
+  padding: .95rem 0 .95rem 1.7rem;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink-soft);
+}
+.gains li::before {
+  content: "";
+  position: absolute;
+  left: .1rem;
+  top: 1.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: .55;
+}
+
+/* ------------------------------- kuvat ---------------------------------- */
+.photo-group { margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+.photo-group:first-child { margin-top: clamp(1.25rem, 3vw, 1.75rem); }
+
+.photo-group__title {
+  font-family: var(--font-sans);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .9rem;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: nowrap;          /* yksi rivi */
+  overflow-x: auto;           /* varmuus: ei vaaka-ylivuotoa, vaan vieritys */
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  gap: clamp(4px, .6vw, 8px);
+  padding: 4px 0 .3rem;
+  scroll-snap-type: x proximity;
+}
+
+.gallery__item {
+  appearance: none;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  border-radius: var(--radius);
+  overflow: hidden;
+  line-height: 0;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.gallery__item img {
+  height: clamp(44px, 11vw, 96px);
+  width: auto;
+  border-radius: var(--radius);
+  background: var(--paper-deep);
+  transition: filter .25s ease;
+}
+.gallery__item:hover { transform: translateY(-2px); }
+.gallery__item:hover img { filter: brightness(1.04); }
+.gallery__item:focus-visible { outline-offset: 4px; }
+
+/* ------------------------------ kuvanäkymä ------------------------------ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: clamp(.75rem, 3vw, 2rem);
+}
+.lightbox[hidden] { display: none; }
+
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 19, 20, .9);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.lightbox__dialog {
+  position: relative;
+  width: min(100%, 64rem);
+  max-height: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(.35rem, 2vw, 1.25rem);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.lightbox.is-open .lightbox__backdrop,
+.lightbox.is-open .lightbox__dialog { opacity: 1; }
+
+.lightbox__figure {
+  margin: 0;
+  grid-column: 2;
+  text-align: center;
+}
+.lightbox__image {
+  max-width: 100%;
+  max-height: 74vh;
+  width: auto;
+  margin-inline: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+  background: #101314;
+}
+.lightbox__caption {
+  color: #EDE8E1;
+  font-size: .95rem;
+  margin-top: .9rem;
+  text-wrap: balance;
+}
+.lightbox__counter {
+  color: #A9B0B4;
+  font-size: .82rem;
+  letter-spacing: .1em;
+  margin: .35rem 0 0;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, .3);
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.lightbox__close:hover, .lightbox__nav:hover { background: rgba(255, 255, 255, .2); }
+.lightbox__nav:hover { transform: scale(1.08); }
+.lightbox__close:focus-visible, .lightbox__nav:focus-visible { outline-color: #fff; }
+
+.lightbox__close {
+  position: fixed;
+  top: clamp(.75rem, 2vw, 1.5rem);
+  right: clamp(.75rem, 2vw, 1.5rem);
+  z-index: 2;
+  font-size: 1.1rem;
+}
+
+/* ------------------------------- yhteydenotto --------------------------- */
+.section--cta {
+  background:
+    radial-gradient(46rem 24rem at 50% 0%, var(--accent-wash), transparent 72%),
+    var(--paper);
+  border-top: 1px solid var(--line-soft);
+  text-align: center;
+}
+.section--cta h2 {
+  font-size: clamp(1.7rem, 1.3rem + 2.2vw, 2.6rem);
+}
+.cta__line { color: var(--ink-soft); }
+.cta__final {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 1.05rem + .8vw, 1.55rem);
+  color: var(--accent-deep);
+  margin-top: 1.1rem;
+}
+
+.contact {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1.25rem, 4vw, 2.75rem);
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+}
+.contact li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contact__label {
+  font-family: var(--font-sans);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: .45rem;
+}
+.contact__link {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: .3rem;
+  transition: border-color .2s ease, color .2s ease;
+}
+.contact__link:hover { color: var(--accent-deep); border-bottom-color: var(--accent); }
+.contact__link span { color: var(--accent); }
+
+/* -------------------------------- alaviite ------------------------------ */
+.site-footer {
+  background: var(--paper-deep);
+  border-top: 1px solid var(--line);
+  padding: clamp(1.5rem, 4vw, 2.25rem) 0;
+  font-size: .9rem;
+  color: var(--ink-faint);
+}
+.site-footer p { margin: 0; }
+
+/* --------------------------- esiintuominen ruudulla --------------------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* ------------------------------ puhelin --------------------------------- */
+@media (max-width: 820px) {
+  /* otsikkopalkki vierii pois sisällön mukana, joten koko valikko mahtuu
+     kahdelle riville ilman kiinteän korkeuden laskentaan */
+  .site-header {
+    position: static;
+    background: var(--paper);
+    backdrop-filter: none;
+  }
+  body { padding-top: 0; }
+  section[id], div[id] { scroll-margin-top: .75rem; }
+
+  .site-header__inner {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .3rem 1rem;
+    min-height: 0;
+    padding: .5rem 0;
+  }
+  .site-header__mark {
+    width: 100%;
+    text-align: center;
+    font-size: .95rem;
+  }
+  .site-nav { width: 100%; }
+  .site-nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .3rem .95rem;
+  }
+  .site-nav a { font-size: .82rem; padding: .25rem 0; }
+  .site-nav__cta a { padding: .35rem .85rem; font-size: .8rem; }
+
+  .photo-group { margin-top: clamp(1.4rem, 4vw, 2.25rem); }
+  .gallery { gap: 5px; }
+
+  .lightbox__dialog {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: .85rem;
+  }
+  .lightbox__figure { grid-column: 1; }
+  .lightbox__nav {
+    position: fixed;
+    bottom: 1.1rem;
+    z-index: 2;
+  }
+  .lightbox__nav--prev { left: 1.1rem; }
+  .lightbox__nav--next { right: 1.1rem; }
+  .lightbox__image { max-height: 58vh; }
+}
+
+@media (max-width: 480px) {
+  .contact { flex-direction: column; align-items: center; gap: 1.35rem; }
+}
+
+/* kapea puhelin: otsikko ei mahdu enää yhdelle riville → anna rivittää */
+@media (max-width: 420px) {
+  .hero__title { white-space: normal; }
+}
+
+/* ----------------------------- vähennetty liike ------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+}
+
+/* -------------------------------- tulosta ------------------------------- */
+@media print {
+  .site-header, .progress, .lightbox, .skip-link { display: none !important; }
+  body { background: #fff; font-size: 11pt; line-height: 1.5; }
+  .section { padding: 1rem 0; }
+  .section--alt, .hero { background: #fff !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; color: #555; }
+}
